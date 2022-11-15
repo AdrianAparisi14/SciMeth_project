@@ -1,0 +1,106 @@
+def ur5e_force_Tcp_IP():
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(24)
+  set_gravity([0.0, 0.0, 9.82])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_safety_mode_transition_hardness(1)
+  set_tcp(p[0.0,0.0,0.107,0.0,0.0,0.0])
+  set_payload(0.48,[0.011,-0.005,0.011])
+  global Plano_Staubli=p[0.01579782497587988,-0.4301981888498516,-0.33096327225554545,-3.131510651668211,-0.02722443278343098,-0.003428996115646531]
+  global Plano_cara_pala=p[-0.49385859482842254,0.30121312388269494,0.00900262086169236,-1.7329839413760743E-4,0.0018192520771814634,-0.01140675755486079]
+  global Plano_impresion=p[0.10568377132679324,-0.5914446708041349,0.3281619456391881,1.32086543468876E-4,-7.065214201144933E-5,1.5709568460433303]
+  global Plano_mesa=p[0.10561673839179801,-0.3917359725542017,-0.19925057481237496,0.008510376750512189,-0.008239403226797264,4.0466434986552646E-5]
+  global home_2_p=p[.344626280864, -.573395434621, -.099088339853, -3.134752094158, -.000071740556, -.013061079469]
+  global home_2_q=[1.9061284065246582, -0.6773255628398438, 1.6362155119525355, -2.524673124352926, -1.559869114552633, 3.4798965454101562]
+  global P_inicio_2_p=p[.344870029363, -.573134488181, -.131926213716, -3.134749190801, -.000056679652, -.013027517647]
+  global P_inicio_2_q=[1.9065232276916504, -0.6129759115031739, 1.6225379149066372, -2.5753399334349574, -1.5600369612323206, 3.480400323867798]
+  global P_finaldef_2_p=p[.344863165604, -.392309464384, -.130394324065, -3.134732292075, -.000120341658, -.013015771085]
+  global P_finaldef_2_q=[2.0276589393615723, -0.7625883382609864, 2.079933468495504, -2.8843585453429164, -1.559136692677633, 3.602001428604126]
+  global P_salida_2_p=p[.344584147697, -.392616470348, -.095160369103, -3.134743709529, -.000133155887, -.013083135328]
+  global P_salida_2_q=[2.0270371437072754, -0.8540042203715821, 2.0964415709124964, -2.809472223321432, -1.5588606039630335, 3.601174831390381]
+  $ 36 "Thread_1"
+  thread Thread_1():
+    while (True):
+      global var_2= force ()
+      global var_1= get_tcp_force () 
+      global var_3=norm( get_target_tcp_speed ())
+      global var_4=get_steptime()
+      if (var_send ==   True  ):
+        socket_send_string(var_1)
+        socket_send_string(var_2)
+        socket_send_string("]")
+        socket_send_string(var_3)
+      else:
+      end
+      sync()
+    end
+  end
+  threadId_Thread_1 = run Thread_1()
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "var_send≔ False "
+    global var_send=  False  
+    $ 3 "fuerza≔[0,0,30,0,0,0]"
+    global fuerza=[0,0,30,0,0,0]
+    $ 4 "vel≔[0.1,0.1,0.1,0.17,0.17,0.17]"
+    global vel=[0.1,0.1,0.1,0.17,0.17,0.17]
+    $ 5 "vel_2≔[0.01,0.01,3,0.17,0.17,0.17]"
+    global vel_2=[0.01,0.01,3,0.17,0.17,0.17]
+    $ 6 "sel≔[0,0,1,0,0,0]"
+    global sel=[0,0,1,0,0,0]
+    $ 7 "Incpos≔[0.1,0,0,0,0,0]"
+    global Incpos=[0.1,0,0,0,0,0]
+    $ 8 "IncZ≔[0,0,0.05,0,0,0]"
+    global IncZ=[0,0,0.05,0,0,0]
+    $ 9 "open≔socket_open('192.168.0.10',5000)"
+    global open=socket_open("192.168.0.10",5000)
+    $ 10 "socket_send_string('get')"
+    socket_send_string("get")
+    $ 11 "textmsg('conexion establecida')"
+    textmsg("conexion establecida")
+    $ 12 "force_mode_set_damping(0.5)"
+    force_mode_set_damping(0.5)
+    $ 13 "force_mode_set_gain_scaling(1)"
+    force_mode_set_gain_scaling(1)
+    $ 15 "MoveL"
+    $ 16 "Wait: 1.0"
+    sleep(1.0)
+    $ 17 "home_2"
+    movel(pose_trans(Plano_mesa, pose_trans(p[-.103969333958, .393425387687, .196772968429, -.008510376751, .008239403227, -.000040466435], home_2_p)), a=1.2, v=0.25)
+    $ 18 "var_send≔ True "
+    global var_send=  True  
+    $ 19 "zero_ftsensor()"
+    zero_ftsensor()
+    $ 20 "Wait: 0.2"
+    sleep(0.2)
+    $ 21 "P_inicio_2"
+    movel(pose_trans(Plano_mesa, pose_trans(p[-.103969333958, .393425387687, .196772968429, -.008510376751, .008239403227, -.000040466435], P_inicio_2_p)), a=1.2, v=0.25)
+    $ 23 "force_mode(Tool,sel,fuerza,2,vel)"
+    force_mode(get_forward_kin(),sel,fuerza,2,vel)
+    $ 24 "Wait: 2.0"
+    sleep(2.0)
+    $ 27 "P_finaldef_2"
+    movel(pose_trans(Plano_mesa, pose_trans(p[-.103969333958, .393425387687, .196772968429, -.008510376751, .008239403227, -.000040466435], P_finaldef_2_p)), a=1.2, v=0.05)
+    $ 28 "end_force_mode()"
+    end_force_mode()
+    $ 29 "Wait: 0.5"
+    sleep(0.5)
+    $ 31 "P_salida_2"
+    movel(pose_trans(Plano_mesa, pose_trans(p[-.103969333958, .393425387687, .196772968429, -.008510376751, .008239403227, -.000040466435], P_salida_2_p)), a=1.2, v=0.25)
+    $ 33 "home_2"
+    movel(pose_trans(Plano_mesa, pose_trans(p[-.103969333958, .393425387687, .196772968429, -.008510376751, .008239403227, -.000040466435], home_2_p)), a=1.2, v=0.25)
+    $ 34 "var_send≔ False "
+    global var_send=  False  
+    $ 35 "Halt"
+    halt
+  end
+end

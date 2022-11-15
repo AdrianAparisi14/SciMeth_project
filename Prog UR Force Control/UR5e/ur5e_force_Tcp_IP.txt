@@ -1,0 +1,54 @@
+ Program
+   Robot Program
+     var_send≔ False 
+     fuerza≔[0,0,30,0,0,0]
+     vel≔[0.1,0.1,0.1,0.17,0.17,0.17]
+     vel_2≔[0.01,0.01,3,0.17,0.17,0.17]
+     sel≔[0,0,1,0,0,0]
+     Incpos≔[0.1,0,0,0,0,0]
+     IncZ≔[0,0,0.05,0,0,0]
+     open≔socket_open("192.168.0.10",5000)
+     socket_send_string("get")
+     textmsg("conexion establecida")
+     force_mode_set_damping(0.5)
+     force_mode_set_gain_scaling(1)
+     'MoveL'
+     MoveL
+       Wait: 1.0
+       home_2
+       var_send≔ True 
+       zero_ftsensor()
+       Wait: 0.2
+       P_inicio_2
+       'P_iniciodef≔get_actual_tcp_pose()'
+       force_mode(Tool,sel,fuerza,2,vel)
+       Wait: 2.0
+       'P_final≔pose_add(P_iniciodef, Incpos)'
+       'P_final'
+       P_finaldef_2
+       end_force_mode()
+       Wait: 0.5
+       'P_final_salida≔pose_add(P_finaldef, IncZ)'
+       P_salida_2
+       'home'
+       home_2
+       var_send≔ False 
+       Halt
+   Thread_1
+     var_2≔force()
+     var_1≔get_tcp_force() 
+     var_3≔norm(get_target_tcp_speed())
+     var_4≔get_steptime()
+     'Wait: 0.1'
+     If var_send≟ True 
+       socket_send_string(var_1)
+       socket_send_string(var_2)
+       socket_send_string("]")
+       socket_send_string(var_3)
+       'socket_send_string("]")'
+       'socket_send_string(var_4)'
+     Else
+       'socket_send_string("a")'
+     'socket_send_string(var_1)'
+     'socket_send_string("a")'
+     sync()
