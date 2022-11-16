@@ -4,7 +4,8 @@ import re
 import argparse
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(prog = 'Clean File',description = 'cleans txt to csv files')
+    parser = argparse.ArgumentParser(
+        prog='Clean File', description='cleans txt to csv files')
     parser.add_argument('path')
 
     args = parser.parse_args()
@@ -16,7 +17,7 @@ if __name__ == "__main__":
     for root, dirs, files in os.walk(args.path):
         for file in files:
             if regex.match(file):
-                text_file_list.append((root,file))
+                text_file_list.append((root, file))
 
     # Open and write new file
     for root, filename in text_file_list:
