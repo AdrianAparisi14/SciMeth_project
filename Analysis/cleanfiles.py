@@ -1,22 +1,30 @@
 #! /usr/bin/python3
 import os
 import re
+import argparse
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog = 'Clean File',description = 'cleans txt to csv files')
+    parser.add_argument('path')
 
-    rootdir = "./data"
+    args = parser.parse_args()
+
     regex = re.compile("(.*txt$)")
 
     text_file_list = []
 
-    for root, dirs, files in os.walk(rootdir):
+    for root, dirs, files in os.walk(args.path):
         for file in files:
             if regex.match(file):
-                text_file_list.append(root + "/" + file)
+                text_file_list.append((root,file))
 
-    # Open and modify file
-    for text_file in text_file_list:
-        csv_file = text_file[0:-4] + ".csv"
+    # Open and write new file
+    for root, filename in text_file_list:
+        csv_file = "./data/" + filename[0:-4] + ".csv"
+        text_file = root + "/" + filename
+
+        if not ("_" in filename):
+            continue
 
         with open(text_file, 'r') as file:
             data = file.read()
