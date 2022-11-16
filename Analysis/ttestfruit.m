@@ -1,6 +1,6 @@
 function [h, p, ci] = ttestfruit(sample1, sample2)
 
-    [h, p, ci, stats] = ttest2(sample1, sample2)
+    [h, p, ci, stats] = ttest2(sample1, sample2);
 
 	sample1stats = [ mean(sample1) var(sample1)];
 	sample2stats = [ mean(sample2) var(sample2)];
