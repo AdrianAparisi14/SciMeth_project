@@ -1,0 +1,52 @@
+==================================================
+For: Banana
+==================================================
+Ripe fruit are normally distributed as
+X ~ N
+    8.9086    0.8862
+Overripe fruit are normally distributed as
+Y ~ N
+    7.4639    0.3157
+Reject H0! Samples are different :^)
+95% CI for difference of mean between ripe and overripe fruit: 
+    1.1644
+    1.7249
+==================================================
+For: Apple
+==================================================
+Ripe fruit are normally distributed as
+X ~ N
+   10.7238    0.5891
+Overripe fruit are normally distributed as
+Y ~ N
+   10.6936    0.5973
+Do not Reject H0! Result inconclusive >:o
+95% CI for difference of mean between ripe and overripe fruit: 
+   -0.2483
+    0.3086
+==================================================
+For: Mandarine
+==================================================
+Ripe fruit are normally distributed as
+X ~ N
+    7.0020    0.3966
+Overripe fruit are normally distributed as
+Y ~ N
+    5.2262    0.1132
+Reject H0! Samples are different :^)
+95% CI for difference of mean between ripe and overripe fruit: 
+    1.5933
+    1.9584
+==================================================
+For: Kiwi
+==================================================
+Ripe fruit are normally distributed as
+X ~ N
+    7.2604    0.4628
+Overripe fruit are normally distributed as
+Y ~ N
+    5.9089    0.2919
+Reject H0! Samples are different :^)
+95% CI for difference of mean between ripe and overripe fruit: 
+    1.1294
+    1.5736
